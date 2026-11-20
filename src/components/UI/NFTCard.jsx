@@ -4,6 +4,39 @@ import Countdown from "./countdown";
 
 const NFTCard = ({ item, showShare = false }) => {
   const nftId = item.nftId || item.id;
+  const nftUrl = `${window.location.origin}/item-details/${nftId}`;
+
+  const shareFacebook = () => {
+    window.open(
+      `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+        nftUrl
+      )}`,
+      "_blank",
+      "noopener,noreferrer"
+    );
+  };
+
+  const shareTwitter = () => {
+    window.open(
+      `https://twitter.com/intent/tweet?url=${encodeURIComponent(
+        nftUrl
+      )}&text=${encodeURIComponent(item.title || "Check out this NFT!")}`,
+      "_blank",
+      "noopener,noreferrer"
+    );
+  };
+
+  const shareEmail = () => {
+    const subject = encodeURIComponent(
+      item.title || "Check out this NFT!"
+    );
+
+    const body = encodeURIComponent(
+      `Check out this NFT: ${nftUrl}`
+    );
+
+    window.location.href = `mailto:?subject=${subject}&body=${body}`;
+  };
 
   return (
     <div className="nft__item">
@@ -40,26 +73,44 @@ const NFTCard = ({ item, showShare = false }) => {
               <div className="nft__item_share">
                 <h4>Share</h4>
 
-                <a
-                  href="#"
-                  onClick={(e) => e.preventDefault()}
+                <button
+                  type="button"
+                  onClick={shareFacebook}
+                  aria-label="Share on Facebook"
+                  style={{
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer",
+                  }}
                 >
                   <i className="fa fa-facebook fa-lg"></i>
-                </a>
+                </button>
 
-                <a
-                  href="#"
-                  onClick={(e) => e.preventDefault()}
+                <button
+                  type="button"
+                  onClick={shareTwitter}
+                  aria-label="Share on Twitter"
+                  style={{
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer",
+                  }}
                 >
                   <i className="fa fa-twitter fa-lg"></i>
-                </a>
+                </button>
 
-                <a
-                  href="#"
-                  onClick={(e) => e.preventDefault()}
+                <button
+                  type="button"
+                  onClick={shareEmail}
+                  aria-label="Share by Email"
+                  style={{
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer",
+                  }}
                 >
                   <i className="fa fa-envelope fa-lg"></i>
-                </a>
+                </button>
               </div>
             )}
           </div>
